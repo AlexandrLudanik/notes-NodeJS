@@ -1,0 +1,15 @@
+{
+  "name": "notebook",
+  "version": "1.0.0",
+  "description": "add, remove, list to JSON file",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Alexandr Ludanik",
+  "license": "ISC",
+  "dependencies": {
+    "yargs": "^14.0.0"
+  }
+}
