@@ -1,20 +1,19 @@
 const fs = require("fs");
-const file = "note.json"
+const file = "note.json";
+
 const readFile = fileName => {
-    try {
+    if (fs.existsSync(file)) {
         return JSON.parse(fs.readFileSync(fileName));
-    } catch (e) {
+    } else {
         return [];
     }
 };
+
 const writeFile = (fileName, content) => {
-    try {
-        fs.writeFileSync(fileName, JSON.stringify(content));
-        console.log("success");
-    } catch (e) {
-        console.log(e);
-    }
+    fs.writeFileSync(fileName, JSON.stringify(content));
+    console.log("success");
 };
+
 const add = (noteTitle, noteBody) => {
     let note = readFile(file);
     let index = note.findIndex(x => x.title === noteTitle);
@@ -25,15 +24,22 @@ const add = (noteTitle, noteBody) => {
     }
     writeFile(file, note);
 };
+
 const remove = noteTitle => {
     let note = readFile(file);
     const filteredList = note.filter(x => x.title !== noteTitle);
     writeFile(file, filteredList);
 };
+
 const list = () => {
-    let note = readFile(file);
-    console.log(note);
+    let notes = readFile(file);
+    notes.forEach(note => {
+        console.log(note.title);
+        console.log(note.body);
+        console.log('====================');
+    });
 };
+
 module.exports = {
     add,
     remove,
