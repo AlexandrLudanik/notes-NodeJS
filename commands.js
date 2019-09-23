@@ -40,8 +40,16 @@ const list = () => {
     });
 };
 
+const read = (noteTitle) => {
+    let notes = readFile(file);
+    notes.forEach(note => { note.title === noteTitle
+        console.log(note.body);
+    });
+};
+
 module.exports = {
     add,
     remove,
-    list
+    list,
+    read
 };
