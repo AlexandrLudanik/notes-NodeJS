@@ -1,59 +1,72 @@
 const yargs = require("yargs");
 const commands = require("./commands");
 
-const argv = yargs.command("add", "Adds a new note", {
-    noteTitle: {
-        describe: "Title of note",
-        alias: "t",
-        demandOption: true
+yargs.command({
+    command: 'add',
+    describe: 'Add a new note',
+    builder: {
+        title: {
+            describe: 'Note title',
+            demandOption: true,
+            type: 'string',
+            alias: 't'
+        },
+        body: {
+            describe: 'Note body',
+            demandOption: true,
+            type: 'string',
+            alias: 'b'
+        }
     },
-    noteBody: {
-        describe: "Body of note",
-        alias: "b",
-        demandOption: true
+    handler(argv) {
+        if (argv.title && argv.body) {
+            commands.add(argv.title, argv.body);
+        }
     }
-})
-    .command("remove", "Remove note", {
-        noteTitle: {
-            describe: "Title of note",
-            alias: "t",
-            demandOption: true
-        }
-    })
-    .command("read", "Read note", {
-        noteTitle: {
-            describe: "Title of note",
-            alias: "r",
-            demandOption: true
-        }
-    })
-    .command("list", "list of  all titles and bodies")
-    .help()
-    .alias("help", "h");
+});
 
-let argument = argv.argv._[0];
-let noteTitle = argv.argv.noteTitle;
-let noteBody = argv.argv.noteBody;
+yargs.command({
+    command: 'remove',
+    describe: 'Remove a note',
+    builder: {
+        title: {
+            describe: 'Note title',
+            demandOption: true,
+            type: 'string',
+            alias: 't'
+        }
+    },
+    handler(argv) {
+        if (argv.title) {
+            commands.remove(argv.title);
+        }
+    }
+});
 
-switch (argument) {
-    case "add":
-        if (noteTitle && noteBody) {
-            commands.add(noteTitle, noteBody);
-        }
-        break;
-    case "remove":
-        if (noteTitle) {
-            commands.remove(noteTitle);
-        }
-        break;
-    case "list":
+yargs.command({
+    command: 'list',
+    describe: 'List your notes',
+    handler() {
         commands.list();
-        break;
-    case "read":
-        if (noteTitle) {
-            commands.read(noteTitle)
+    }
+});
+
+yargs.command({
+    command: 'read',
+    describe: 'Read a note',
+    builder: {
+        title: {
+            describe: 'Note title',
+            demandOption: true,
+            type: 'string',
+            alias: 't'
         }
-        break;
-    default:
-        console.log("ok, this doesnt make any sense");
-}
+    },
+    handler(argv) {
+        if (argv.title) {
+            commands.read(argv.title)
+        }
+    }
+});
+
+yargs.parse();

@@ -15,8 +15,8 @@ const writeFile = (fileName, content) => {
 };
 
 const add = (noteTitle, noteBody) => {
-    let note = readFile(file);
-    let index = note.findIndex(x => x.title === noteTitle);
+    const note = readFile(file);
+    const index = note.findIndex(x => x.title === noteTitle);
     if (index === -1) {
         note.push({title: noteTitle, body: noteBody});
     } else {
@@ -26,13 +26,13 @@ const add = (noteTitle, noteBody) => {
 };
 
 const remove = noteTitle => {
-    let note = readFile(file);
+    const note = readFile(file);
     const filteredList = note.filter(x => x.title !== noteTitle);
     writeFile(file, filteredList);
 };
 
 const list = () => {
-    let notes = readFile(file);
+    const notes = readFile(file);
     notes.forEach(note => {
         console.log(note.title);
         console.log(note.body);
@@ -41,10 +41,9 @@ const list = () => {
 };
 
 const read = (noteTitle) => {
-    let notes = readFile(file);
-    notes.forEach(note => { note.title === noteTitle
-        console.log(note.body);
-    });
+    const notes = readFile(file);
+    const noteToList = notes.find(note => note.title === noteTitle);
+    console.log(noteToList.body)
 };
 
 module.exports = {
