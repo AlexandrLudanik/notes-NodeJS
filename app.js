@@ -23,9 +23,7 @@ yargs.command({
             commands.add(argv.title, argv.body);
         }
     }
-});
-
-yargs.command({
+}).command({
     command: 'remove',
     describe: 'Remove a note',
     builder: {
@@ -41,17 +39,13 @@ yargs.command({
             commands.remove(argv.title);
         }
     }
-});
-
-yargs.command({
+}).command({
     command: 'list',
     describe: 'List your notes',
     handler() {
         commands.list();
     }
-});
-
-yargs.command({
+}).command({
     command: 'read',
     describe: 'Read a note',
     builder: {
